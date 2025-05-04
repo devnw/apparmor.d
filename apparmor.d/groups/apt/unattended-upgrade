@@ -50,11 +50,12 @@ profile unattended-upgrade @{exec_path} flags=(attach_disconnected) {
 
   @{bin}/apt-listchanges          rPx,
   @{bin}/dpkg                     rPx,
-  @{bin}/dpkg-preconfigure        rPx,
+  @{bin}/dpkg-divert              rPx,
+  @{sbin}/dpkg-preconfigure       rPx,
   @{bin}/etckeeper                rPx,
   @{bin}/lsb_release              rPx -> lsb_release,
-  @{bin}/on_ac_power              rPx,
-  @{bin}/sendmail                rPUx,
+  @{sbin}/on_ac_power             rPx,
+  @{sbin}/sendmail               rPUx,
   @{lib}/apt/methods/http{,s}     rPx,
   @{lib}/needrestart/apt-pinvoke  rPx,
   @{lib}/update-notifier/update-motd-updates-available rPx,
@@ -64,6 +65,7 @@ profile unattended-upgrade @{exec_path} flags=(attach_disconnected) {
 
   @{etc_ro}/login.defs r,
   @{etc_ro}/security/capability.conf r,
+  /etc/apport/report-ignore/ r,
   /etc/apt/*.list r,
   /etc/apt/apt.conf.d/{,**} r,
   /etc/debian_version r,

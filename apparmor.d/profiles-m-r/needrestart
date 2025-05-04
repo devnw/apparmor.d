@@ -6,7 +6,7 @@ abi <abi/4.0>,
 
 include <tunables/global>
 
-@{exec_path} = @{bin}/needrestart
+@{exec_path} = @{sbin}/needrestart
 profile needrestart @{exec_path} flags=(attach_disconnected) {
   include <abstractions/base>
   include <abstractions/consoles>
@@ -26,7 +26,6 @@ profile needrestart @{exec_path} flags=(attach_disconnected) {
 
   @{exec_path} mrix,
 
-  @{bin}/*                                 r,
   @{sh_path}                               rix,
   @{bin}/dpkg-query                        rpx,
   @{bin}/fail2ban-server                   rPx,
@@ -37,16 +36,11 @@ profile needrestart @{exec_path} flags=(attach_disconnected) {
   @{bin}/systemctl                         rCx -> systemctl,
   @{bin}/systemd-detect-virt               rPx,
   @{bin}/udevadm                           rCx -> udevadm,
-  @{bin}/unix_chkpwd                       rPx,
+  @{sbin}/unix_chkpwd                      rPx,
   @{bin}/whiptail                          rPx,
   @{bin}/who                               rix,
   @{lib}/needrestart/*                     rPx,
   /usr/share/debconf/frontend              rix,
-
-  @{att}/@{lib}/@{python_name}/**          r,
-
-  /usr/share/needrestart/{,**} r,
-  /usr/share/unattended-upgrades/unattended-upgrade-shutdown r,
 
   /etc/debconf.conf r,
   /etc/init.d/* r,
@@ -56,10 +50,15 @@ profile needrestart @{exec_path} flags=(attach_disconnected) {
 
   / r,
   /boot/ r,
-  /boot/intel-ucode.img r,
-  /boot/vmlinuz* r,
+  /boot/* r,
+  /opt/*/** r,
+  @{bin}/* r,
+  @{lib}/** r,
+  @{sbin}/** r,
+  @{att}/@{lib}/** r,
+  /usr/share/** r,
+  /var/lib/*/** r,
 
-  owner /var/lib/juju/agents/{,**} r,
   owner /var/cache/debconf/{config,passwords,templates}.dat{,-new,-old} rwk,
 
   /tmp/@{word10}/ rw,

@@ -14,13 +14,16 @@
 @{MOUNTS}=@{MOUNTDIRS}/*/ @{run}/user/@{uid}/gvfs/
 
 # Common places for binaries and libraries across distributions
-@{bin}=/{,usr/}{,s}bin
-@{sbin}=/{,usr/}sbin
+@{bin}=/{,usr/}bin
+@{sbin}=/{,usr/}sbin     #aa:only apt zypper
+@{sbin}=/{,usr/}{,s}bin  #aa:only pacman
 @{lib}=/{,usr/}lib{,exec,32,64}
 
 # Common places for temporary files
 @{tmp}=/tmp/ /tmp/user/@{uid}/
 
+# Common places for EFI
+@{efi}=/boot/ /efi/ /boot/efi/
 
 # System Variables
 # ----------------
@@ -65,5 +68,8 @@
 @{att}=/
 
 alias // -> /,
+
+#aa:only apt
+alias /usr/bin/which.debianutils -> /usr/bin/which,
 
 # vim:syntax=apparmor

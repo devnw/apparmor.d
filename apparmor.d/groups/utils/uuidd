@@ -6,7 +6,7 @@ abi <abi/4.0>,
 
 include <tunables/global>
 
-@{exec_path} = @{bin}/uuidd
+@{exec_path} = @{sbin}/uuidd
 profile uuidd @{exec_path} flags=(attach_disconnected) {
   include <abstractions/base>
   include <abstractions/consoles>
@@ -16,6 +16,7 @@ profile uuidd @{exec_path} flags=(attach_disconnected) {
   @{exec_path} mr,
 
   owner /var/lib/libuuid/clock.txt rwk,
+  owner /var/lib/libuuid/clock-cont.txt rwk,
 
   @{run}/uuidd/request rw,
   @{att}/@{run}/uuidd/request rw,

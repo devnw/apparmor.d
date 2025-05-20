@@ -13,6 +13,7 @@ profile upowerd @{exec_path} flags=(attach_disconnected) {
   include <abstractions/bus-system>
   include <abstractions/bus/org.bluez>
   include <abstractions/bus/org.freedesktop.login1>
+  include <abstractions/bus/org.freedesktop.PolicyKit1>
   include <abstractions/devices-usb>
 
   network netlink raw,
@@ -56,6 +57,7 @@ profile upowerd @{exec_path} flags=(attach_disconnected) {
   @{sys}/devices/**/power_supply/**/* r,
   @{sys}/devices/**/uevent r,
   @{sys}/devices/virtual/dmi/id/product_name r,
+  @{sys}/devices/virtual/misc/uhid/*/input/input@{int}/name r,
 
   /dev/input/event* r,
 

@@ -9,13 +9,15 @@
 
 # Name of the systemd profiles. Can be `unconfined` or `systemd`, `systemd-user`
 @{p_systemd}=unconfined
+@{p_systemd_executor}=unconfined
 @{p_systemd_user}=unconfined
+@{p_systemd_user_executor}=unconfined
 
 # Name of the dbus daemon profiles
 @{p_dbus_accessibility}=dbus-accessibility
 #aa:only apparmor4.1
-@{p_dbus_system}=dbus-system//&unconfined
-@{p_dbus_session}=dbus-session//&unconfined
+@{p_dbus_system}={dbus-system,dbus-system//&unconfined}
+@{p_dbus_session}={dbus-session,dbus-session//&unconfined}
 
 #aa:exclude apparmor4.1
 @{p_dbus_system}=dbus-system

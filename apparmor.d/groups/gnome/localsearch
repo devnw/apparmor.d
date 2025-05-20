@@ -26,6 +26,7 @@ profile localsearch @{exec_path} flags=(attach_disconnected) {
 
   network netlink raw,
 
+  #aa:dbus own bus=session name=org.freedesktop.Tracker3.Miner.Files
   #aa:dbus own bus=session name=org.freedesktop.LocalSearch3
 
   @{exec_path} mr,
@@ -33,6 +34,7 @@ profile localsearch @{exec_path} flags=(attach_disconnected) {
   @{lib}/localsearch-extractor-3 ix, # nnp
 
   /usr/share/localsearch3/{,**} r,
+  /usr/share/osinfo/{,**} r,
   /usr/share/poppler/{,**} r,
 
   # Allow to search user files
@@ -45,11 +47,8 @@ profile localsearch @{exec_path} flags=(attach_disconnected) {
   owner @{user_cache_dirs}/tracker3/files/ rw,
   owner @{user_cache_dirs}/tracker3/files/** rwk,
 
-  owner /var/tmp/etilqs_@{hex15} rw,
-  owner /var/tmp/etilqs_@{hex16} rw,
-  owner @{tmp}/etilqs_@{hex12}@{hex2} rw,
-  owner @{tmp}/etilqs_@{hex15} rw,
-  owner @{tmp}/etilqs_@{hex16} rw,
+  owner @{tmp}/etilqs_@{sqlhex} rw,
+  owner /var/tmp/etilqs_@{sqlhex} rw,
 
   @{run}/mount/utab r,
 
@@ -59,6 +58,7 @@ profile localsearch @{exec_path} flags=(attach_disconnected) {
         @{PROC}/sys/fs/inotify/max_user_watches r,
   owner @{PROC}/@{pid}/cmdline r,
   owner @{PROC}/@{pid}/mountinfo r,
+  owner @{PROC}/@{pid}/mounts r,
   owner @{PROC}/@{pid}/task/@{tid}/comm rw,
 
   /dev/media@{int} rw,

@@ -6,7 +6,7 @@ title: Roadmap
 
 This is the current list of features that must be implemented to get to a stable release
 
-- [ ] **Play machine**
+- [x] **Play machine**
 
 - [ ] **[Sub packages](https://github.com/roddhjav/apparmor.d/issues/464)** 
     - [x] Move most profiles into groups such that 
@@ -21,8 +21,15 @@ This is the current list of features that must be implemented to get to a stable
     - [ ] General documentation improvements
 
 - [ ] **General improvements**
-    - [ ] Provide a proper fix for #74, #80 & #235
+    - [ ] Provide a proper fix for [#74](https://github.com/roddhjav/apparmor.d/issues/74), [#80](https://github.com/roddhjav/apparmor.d/issues/80) & [#235](https://github.com/roddhjav/apparmor.d/issues/235)
     - [ ] The apt/dpkg profiles needs to be reworked
+
+- [ ] Build system
+    - [ ] Continuous release on the main branch, ~2 releases per week
+    - [ ] Provide packages repo for ubuntu/debian
+    - [ ] Provide complain/enforced packages version
+    - [ ] Add a `just` target to install the profiles in the right place
+    - [ ] Fully drop the Makefile in favor of `just`
 
 ## Next features
 

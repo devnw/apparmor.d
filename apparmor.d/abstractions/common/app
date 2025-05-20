@@ -27,6 +27,7 @@
   include <abstractions/gstreamer>
   include <abstractions/nameservice-strict>
   include <abstractions/p11-kit>
+  include <abstractions/path>
   include <abstractions/ssl_certs>
   include <abstractions/video>
 
@@ -34,18 +35,13 @@
   dbus bus=session,
   dbus bus=system,
 
-  /usr/cache/** r,
-  /usr/local/{,**} r,
+  /usr/** r,
   /usr/share/** rk,
 
   /etc/{,**} r,
 
-        / r,
         /.* r,
-        /*/ r,
-        @{bin}/ r,
         @{lib}/ r,
-        /usr/local/bin/ r,
   owner /_@{int}_/ w,
   owner /@{uuid}/ w,
   owner /var/cache/ldconfig/{,**} rw,
@@ -63,9 +59,10 @@
   owner @{run}/user/@{uid}/** rwlk -> @{run}/user/@{uid}/**,
   owner @{user_games_dirs}/** rmix,
 
-  owner /var/cache/tmp/** rwlk -> /var/cache/tmp/**,
   owner @{tmp}/** rmwk,
   owner /dev/shm/** rwlk -> /dev/shm/**,
+  owner /var/cache/tmp/** rwlk -> /var/cache/tmp/**,
+  owner /var/tmp/etilqs_@{sqlhex} rw,
 
   @{att}/@{run}/systemd/inhibit/@{int}.ref rw,
 

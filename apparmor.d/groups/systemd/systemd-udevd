@@ -8,7 +8,7 @@ abi <abi/4.0>,
 include <tunables/global>
 
 @{exec_path} = @{bin}/udevadm @{lib}/systemd/systemd-udevd
-profile systemd-udevd @{exec_path} flags=(attach_disconnected,complain) {
+profile systemd-udevd @{exec_path} flags=(attach_disconnected) {
   include <abstractions/base>
   include <abstractions/common/systemd>
   include <abstractions/consoles>
@@ -41,17 +41,18 @@ profile systemd-udevd @{exec_path} flags=(attach_disconnected,complain) {
   @{coreutils_path}       rix,
   @{pager_path}           rPx -> child-pager,
   @{bin}/*-print-pci-ids  rix,
-  @{bin}/alsactl          rPUx,
+  @{sbin}/alsactl         rPUx,
   @{bin}/ddcutil          rPx,
-  @{bin}/dmsetup          rPx,
-  @{bin}/ethtool          rix,
-  @{bin}/issue-generator  rPx,
+  @{sbin}/dmsetup         rPx,
+  @{sbin}/ethtool         rix,
+  @{sbin}/issue-generator rPx,
+  @{sbin}/kdump-config    rPUx,
   @{bin}/kmod             rPx,
   @{bin}/logger           rix,
   @{bin}/ls               rix,
-  @{bin}/lvm              rPx,
+  @{sbin}/lvm             rPx,
   @{bin}/mknod            rix,
-  @{bin}/multipath        rPx,
+  @{sbin}/multipath       rPx,
   @{bin}/nfsrahead        rix,
   @{bin}/nvidia-modprobe  rPx -> child-modprobe-nvidia,
   @{bin}/setfacl          rix,

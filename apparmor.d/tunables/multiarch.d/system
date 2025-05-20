@@ -14,13 +14,16 @@
 @{MOUNTS}=@{MOUNTDIRS}/*/ @{run}/user/@{uid}/gvfs/
 
 # Common places for binaries and libraries across distributions
-@{bin}=/{,usr/}{,s}bin
-@{sbin}=/{,usr/}sbin
+@{bin}=/{,usr/}bin
+@{sbin}=/{,usr/}sbin     #aa:only apt zypper
+@{sbin}=/{,usr/}{,s}bin  #aa:only pacman
 @{lib}=/{,usr/}lib{,exec,32,64}
 
 # Common places for temporary files
 @{tmp}=/tmp/ /tmp/user/@{uid}/
 
+# Common places for EFI
+@{efi}=/boot/ /efi/ /boot/efi/
 
 # System Variables
 # ----------------
@@ -51,6 +54,9 @@
 # System Internal
 # ---------------
 
+# SQlite temporary files (hexadecimal from 12 to 16 characters)
+@{sqlhex}=@{hex12} @{hex12}@{h} @{hex12}@{hex2} @{hex15} @{hex16}
+
 # Shortcut for PCI device
 @{pci_id}=@{h}@{h}@{h}@{h}:@{h}@{h}:@{h}@{h}.@{h}
 @{pci_bus}=pci@{h}@{h}@{h}@{h}:@{h}@{h}
@@ -65,5 +71,8 @@
 @{att}=/
 
 alias // -> /,
+
+#aa:only apt
+alias /usr/bin/which.debianutils -> /usr/bin/which,
 
 # vim:syntax=apparmor

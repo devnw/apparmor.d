@@ -2,8 +2,6 @@
 # Copyright (C) 2025 Alexandre Pujol <alexandre@pujol.io>
 # SPDX-License-Identifier: GPL-2.0-only
 
-# Integration environment for apparmor.d
-#
 # Usage:
 #   just
 #   just img ubuntu24 server
@@ -20,7 +18,7 @@
 # Build setings
 destdir := "/"
 build := ".build"
-pkgdest := `pwd` / ".pkg/dist"
+pkgdest := `pwd` / ".pkg"
 pkgname := "apparmor.d"
 
 # Admin username
@@ -63,9 +61,8 @@ prefix := "aa-"
 
 [doc('Show this help message')]
 help:
-	@echo -e "Integration environment helper for apparmor.d\n"
 	@just --list --unsorted
-	@echo -e "\nSee https://apparmor.pujol.io/development/vm/ for more information."
+	@echo -e "\nSee https://apparmor.pujol.io/development/ for more information."
 
 [doc('Build the go programs')]
 build:
@@ -89,13 +86,16 @@ install:
 	#!/usr/bin/env bash
 	set -eu -o pipefail
 	install -Dm0755 {{build}}/aa-log {{destdir}}/usr/bin/aa-log
-	for file in $(find "{{build}}/share" -type f -not -name "*.md" -printf "%P\n"); do
+	mapfile -t share < <(find "{{build}}/share" -type f -not -name "*.md" -printf "%P\n")
+	for file in "${share[@]}"; do
 		install -Dm0644 "{{build}}/share/$file" "{{destdir}}/usr/share/$file"
 	done
-	for file in $(find "{{build}}/apparmor.d" -type f -printf "%P\n"); do
+	mapfile -t aa < <(find "{{build}}/apparmor.d" -type f -printf "%P\n")
+	for file in "${aa[@]}"; do
 		install -Dm0644 "{{build}}/apparmor.d/$file" "{{destdir}}/etc/apparmor.d/$file"
 	done
-	for file in $(find "{{build}}/apparmor.d" -type l -printf "%P\n"); do
+	mapfile -t links < <(find "{{build}}/apparmor.d" -type l -printf "%P\n")
+	for file in "${links[@]}"; do
 		mkdir -p "{{destdir}}/etc/apparmor.d/disable"
 		cp -d "{{build}}/apparmor.d/$file" "{{destdir}}/etc/apparmor.d/$file"
 	done
@@ -158,9 +158,9 @@ serve:
 clean:
 	@rm -rf \
 		debian/.debhelper debian/debhelper* debian/*.debhelper debian/{{pkgname}} \
-		.pkg/{{pkgname}}* {{build}} coverage.out
+		{{pkgdest}}/{{pkgname}}* {{build}} coverage.out
 
-[doc('Build the apparmor.d package')]
+[doc('Build the package in a clean OCI container')]
 package dist:
 	#!/usr/bin/env bash
 	set -eu -o pipefail
@@ -175,7 +175,7 @@ package dist:
 	fi
 	bash dists/docker.sh $dist $version
 
-[doc('Build the image')]
+[doc('Build the VM image')]
 img dist flavor: (package dist)
 	@mkdir -p {{base_dir}}
 	packer build -force \
@@ -201,7 +201,7 @@ create dist flavor:
 		--vcpus {{vcpus}} \
 		--ram {{ram}} \
 		--machine q35 \
-		--boot uefi \
+		{{ if dist == "archlinux" { "" } else { "--boot uefi" } }} \
 		--memorybacking source.type=memfd,access.mode=shared \
 		--disk path={{vm}}/{{prefix}}{{dist}}-{{flavor}}.qcow2,format=qcow2,bus=virtio \
 		--filesystem "`pwd`,0a31bc478ef8e2461a4b1cc10a24cc4",accessmode=passthrough,driver.type=virtiofs \
@@ -238,7 +238,7 @@ list:
 	@echo -e '\033[1m Id   Distribution Flavor  State\033[0m'
 	@virsh {{c}} list --all | grep {{prefix}} | sed 's/{{prefix}}//g'
 
-[doc('List the images')]
+[doc('List the VM images')]
 images:
 	#!/usr/bin/env bash
 	set -eu -o pipefail
@@ -254,7 +254,7 @@ images:
 	}
 	'
 
-[doc('List the machine that can be created')]
+[doc('List the VM images that can be created')]
 available:
 	#!/usr/bin/env bash
 	set -eu -o pipefail

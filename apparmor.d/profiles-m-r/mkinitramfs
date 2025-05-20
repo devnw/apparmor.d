@@ -8,7 +8,7 @@ abi <abi/4.0>,
 
 include <tunables/global>
 
-@{exec_path} = @{bin}/mkinitramfs
+@{exec_path} = @{sbin}/mkinitramfs
 profile mkinitramfs @{exec_path} {
   include <abstractions/base>
   include <abstractions/consoles>
@@ -58,7 +58,7 @@ profile mkinitramfs @{exec_path} {
 
   @{bin}/find                 rCx -> find,
   @{bin}/kmod                 rCx -> kmod,
-  @{bin}/ldconfig             rCx -> ldconfig,
+  @{sbin}/ldconfig            rCx -> ldconfig,
   @{bin}/ldd                  rCx -> ldd,
   @{lib}/@{multiarch}/ld-linux-*so* rCx -> ldd,
   @{lib}/ld-linux.so*         rCx -> ldd,
@@ -96,6 +96,12 @@ profile mkinitramfs @{exec_path} {
   owner /var/tmp/mkinitramfs-@{rand6} rw,
   owner /var/tmp/mkinitramfs-*_@{rand6} rw,
 
+  owner /tmp/tmp.@{rand10}/mkinitramfs_@{rand6} rw,
+  owner /tmp/tmp.@{rand10}/mkinitramfs_@{rand6}/ rw,
+  owner /tmp/tmp.@{rand10}/mkinitramfs_@{rand6}/** rwl -> /tmp/tmp.@{rand10}/mkinitramfs_@{rand6}/**,
+  owner /tmp/tmp.@{rand10}/mkinitramfs-@{rand6} rw,
+  owner /tmp/tmp.@{rand10}/mkinitramfs-*_@{rand6} rw,
+
   @{sys}/devices/platform/ r,
   @{sys}/devices/platform/**/ r,
   @{sys}/devices/platform/**/modalias r,
@@ -130,10 +136,10 @@ profile mkinitramfs @{exec_path} {
 
     capability sys_chroot,
 
-    @{bin}/ldconfig  mr,
+    @{sbin}/ldconfig  mr,
 
     @{sh_path}               rix,
-    @{bin}/ldconfig.real     rix,
+    @{sbin}/ldconfig.real    rix,
 
     owner /var/tmp/mkinitramfs_@{rand6}/etc/ld.so.conf r,
     owner /var/tmp/mkinitramfs_@{rand6}/etc/ld.so.conf.d/{,*.conf} r,

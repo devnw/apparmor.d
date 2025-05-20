@@ -60,22 +60,22 @@ profile snapd @{exec_path} {
   dbus send bus=system path=/org/freedesktop/timedate1
        interface=org.freedesktop.DBus.Properties
        member=Get
-       peer=(name=org.freedesktop.timedate1, label=unconfined),
+       peer=(name=org.freedesktop.timedate1),
 
   @{exec_path} mrix,
 
   @{sh_path}                      rix,
-  @{bin}/adduser                  rPx,
-  @{bin}/apparmor_parser          rPx,
+  @{sbin}/adduser                 rPx,
+  @{sbin}/apparmor_parser         rPx,
   @{bin}/cp                       rix,
   @{bin}/getent                   rix,
-  @{bin}/groupadd                 rPx,
+  @{sbin}/groupadd                rPx,
   @{bin}/gzip                     rix,
   @{bin}/hostnamectl              rPx,
-  @{bin}/journalctl               rPx,
+  @{bin}/journalctl               rCx -> journalctl,
   @{bin}/kmod                     rPx,
   @{bin}/mount                    rix,
-  @{bin}/runuser                  rCx -> runuser,
+  @{sbin}/runuser                 rCx -> runuser,
   @{bin}/ssh-keygen               rPx,
   @{bin}/sync                     rix,
   @{bin}/systemctl                rCx -> systemctl,
@@ -85,7 +85,7 @@ profile snapd @{exec_path} {
   @{bin}/umount                   rix,
   @{bin}/unsquashfs               rix,
   @{bin}/update-desktop-database  rPx,
-  @{bin}/useradd                  rPx,
+  @{sbin}/useradd                 rPx,
 
   @{bin_dirs}/fc-cache-*              mr,
   @{bin_dirs}/snap                  rPUx,
@@ -150,6 +150,7 @@ profile snapd @{exec_path} {
   @{run}/user/@{uid}/snapd-session-agent.socket rw,
   @{run}/user/snap.*/{,**} rw,
 
+  @{run}/mount/utab.act rk,
   @{run}/snapd*.socket rw,
   @{run}/snapd/{,**} rw,
   @{run}/snapd/lock/*.lock rwk,
@@ -157,12 +158,10 @@ profile snapd @{exec_path} {
   @{run}/systemd/private rw,
 
   @{sys}/fs/cgroup/{,*/} r,
-  @{sys}/fs/cgroup/cgroup.controllers r,
-  @{sys}/fs/cgroup/system.slice/{,**/} r,
-  @{sys}/fs/cgroup/system.slice/snap*.service/cgroup.procs r,
   @{sys}/fs/cgroup/*.slice/ r,
-  @{sys}/fs/cgroup/*.slice/*.service/{,**/} r,
-  @{sys}/fs/cgroup/*.slice/*-@{uid}.slice/*@@{uid}.service/app.slice/snap*.service/cgroup.procs r,
+  @{sys}/fs/cgroup/*.slice/{,**/} r,
+  @{sys}/fs/cgroup/*.slice/**/cgroup.procs r,
+  @{sys}/fs/cgroup/cgroup.controllers r,
   @{sys}/kernel/kexec_loaded r,
   @{sys}/kernel/security/apparmor/.notify r,
   @{sys}/kernel/security/apparmor/features/{,**} r,
@@ -200,10 +199,29 @@ profile snapd @{exec_path} {
     include if exists <local/snapd_systemctl>
   }
 
+  profile journalctl {
+    include <abstractions/base>
+    include <abstractions/consoles>
+
+    capability net_admin,
+
+    network netlink raw,
+
+    @{bin}/journalctl mr,
+
+    /etc/machine-id r,
+    /var/lib/dbus/machine-id r,
+
+    /{run,var}/log/journal/ r,
+    /{run,var}/log/journal/@{hex32}/{,*} r,
+
+    include if exists <local/snapd_journalctl>
+  }
+
   profile runuser {
     include <abstractions/base>
 
-    @{bin}/runuser mr,
+    @{sbin}/runuser mr,
 
     include if exists <local/snapd_runuser>
   }

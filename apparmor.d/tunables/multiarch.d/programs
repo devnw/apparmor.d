@@ -33,7 +33,7 @@
 @{open_names} = exo-open xdg-open gio kde-open gio-launch-desktop
 
 # Editors
-@{editor_names} = sensible-editor vim{,.*} vimtutor vim-nox11 nvim nano
+@{editor_names} = sensible-editor vim{,.*} vim-nox11 nvim nano
 @{editor_ui_names} = gnome-text-editor gedit mousepad
 
 # Pager
@@ -76,7 +76,7 @@
 @{text_editors_names} = code gedit mousepad gnome-text-editor zeditor zedit zed-cli
 
 # Document viewers
-@{document_viewers_names} = evince okular *{F,f}oliate YACReader
+@{document_viewers_names} = evince papers okular *{F,f}oliate YACReader
 
 # Image viewers
 @{image_viewers_names} = eog loupe ristretto
@@ -85,12 +85,15 @@
 @{archive_viewers_names} = engrampa file-roller xarchiver
 
 # Office suites
-@{offices_names} = libreoffice soffice
+@{offices_names} = libreoffice soffice wps
 
 # Help
 @{help_names} = yelp
 
 # Terminal emulator
-@{terminal_name} = kgx terminator konsole
+@{terminal_names} = kgx terminator konsole ptyxis
+
+# Backup
+@{backup_names} = deja-dup borg
 
 # vim:syntax=apparmor

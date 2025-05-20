@@ -18,7 +18,7 @@ profile adequate @{exec_path} flags=(complain) {
 
   @{exec_path} r,
 
-  @{bin}/ldconfig        rix,
+  @{sbin}/ldconfig       rix,
 
   # It wants to ldd all binaries/libs in packages.
   @{bin}/ldd                 rCx -> ldd,
@@ -34,7 +34,7 @@ profile adequate @{exec_path} flags=(complain) {
   #  shared object file): ignored.
   @{bin}/dpkg-query          rpx,
   #
-  @{bin}/update-alternatives rPx,
+  @{sbin}/update-alternatives rPx,
 
   /var/lib/adequate/pending rwk,
 

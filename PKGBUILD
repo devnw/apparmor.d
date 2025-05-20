@@ -7,7 +7,7 @@ pkgname=apparmor.d
 pkgver=0.001
 pkgrel=1
 pkgdesc="Full set of apparmor profiles"
-arch=("x86_64")
+arch=('x86_64' 'armv6h' 'armv7h' 'aarch64')
 url="https://github.com/roddhjav/$pkgname"
 license=('GPL-2.0-only')
 depends=('apparmor')
@@ -30,7 +30,8 @@ build() {
   export CGO_CXXFLAGS="${CXXFLAGS}"
   export CGO_LDFLAGS="${LDFLAGS}"
   export GOFLAGS="-buildmode=pie -trimpath -ldflags=-linkmode=external -mod=readonly -modcacherw"
-  DISTRIBUTION=arch just complain
+  export DISTRIBUTION=arch
+  just complain
 }
 
 package() {

@@ -9,7 +9,6 @@ systemd attach_disconnected,mediate_deleted,complain
 systemd-service attach_disconnected,complain
 systemd-user attach_disconnected,mediate_deleted,complain
 
-aa-notify complain
 akonadi_akonotes_resource complain
 akonadi_archivemail_agent complain
 akonadi_birthdays_resource complain
@@ -75,6 +74,9 @@ cups-notifier-rss complain
 cups-pk-helper-mechanism complain
 cupsd attach_disconnected,complain
 ddcutil complain
+deb-systemd-helper complain
+deb-systemd-invoke complain
+decibels complain
 dino attach_disconnected,complain
 discord complain
 discord-chrome-sandbox complain
@@ -84,6 +86,10 @@ dmsetup complain
 dockerd attach_disconnected,complain
 dolphin complain
 downloadhelper complain
+dpkg-maintscript-helper complain
+dpkg-script-apparmor complain
+dpkg-script-man complain
+dpkg-script-udev complain
 drkonqi complain
 drkonqi-coredump-cleanup complain
 drkonqi-coredump-processor complain
@@ -99,7 +105,6 @@ filezilla complain
 finalrd complain
 firewall-applet attach_disconnected,complain
 firewall-config complain
-firewalld attach_disconnected,complain
 flameshot complain
 flatpak attach_disconnected,mediate_deleted,complain
 flatpak-app attach_disconnected,mediate_deleted,complain
@@ -110,29 +115,20 @@ flatpak-system-helper complain
 flatpak-validate-icon complain
 fstrim complain
 fuse-overlayfs complain
-fusermount complain
 gdk-pixbuf-thumbnailer complain
 gdm-generate-config complain
 gdm-runtime-config complain
 gdm-session attach_disconnected,complain
 gdm-xsession complain
-gimp complain
 gmenudbusmenuproxy complain
 gnome-browser-connector-host complain
 gnome-control-center attach_disconnected,complain
 gnome-control-center-goa-helper complain
 gnome-disk-image-mounter complain
-gnome-disks complain
 gnome-extension-gsconnect complain
 gnome-extension-manager complain
 gnome-initial-setup complain
-gnome-music attach_disconnected,complain
-gnome-photos-thumbnailer complain
 gnome-remote-desktop-daemon complain
-gnome-software complain
-gnome-system-monitor attach_disconnected,complain
-gnome-terminal-server complain
-gnome-tweaks complain
 grub-bios-setup complain
 grub-editenv complain
 grub-file complain
@@ -166,8 +162,8 @@ gsettings complain
 gvfsd-dav complain
 gvfsd-wsdd complain
 hostnamectl complain
-hyprctl complain
-hyprlock complain
+hyprctl attach_disconnected,complain
+hyprlock attach_disconnected,complain
 hyprpaper attach_disconnected,complain
 hyprpicker complain
 hyprpm complain
@@ -177,7 +173,6 @@ im-launch complain
 install-info complain
 iwctl complain
 iwd complain
-jitterentropy-rngd complain
 kaccess complain
 kactivitymanagerd complain
 kalendarac complain
@@ -195,7 +190,6 @@ kded complain
 kernel-install complain
 keyboxd complain
 kglobalacceld complain
-kgx complain
 kio_http_cache_cleaner complain
 kiod complain
 kioworker complain
@@ -231,9 +225,6 @@ lvmdump complain
 lvmpolld complain
 man complain
 mate-notification-daemon complain
-mdevctl complain
-metadata-cleaner attach_disconnected,complain
-mke2fs complain
 ModemManager attach_disconnected,complain
 mount attach_disconnected,complain
 multipath attach_disconnected,complain
@@ -250,10 +241,11 @@ nvidia-persistenced complain
 ollama attach_disconnected,complain
 os-prober attach_disconnected,complain
 pam_kwallet_init complain
-pam-tmpdir-helper complain
+papers complain
 passimd attach_disconnected,complain
-pkttyagent complain
 pkla-admin-identities complain
+pkla-check-authorization complain
+pkttyagent complain
 plank complain
 plasma_waitforname complain
 plasma-browser-integration-host complain
@@ -263,6 +255,8 @@ plymouth complain
 plymouth-set-default-theme attach_disconnected,complain
 plymouthd complain
 polkit-kde-authentication-agent attach_disconnected,complain,mediate_deleted
+ptyxis complain
+ptyxis-agent complain
 qdbus complain
 remmina complain
 run-parts complain
@@ -286,6 +280,7 @@ snapd complain
 snapd-apparmor complain
 snapshot complain
 speech-dispatcher complain
+sshd-auth complain
 ssservice complain
 startplasma complain
 startx attach_disconnected,complain
@@ -321,14 +316,19 @@ systemd-generator-debug attach_disconnected,complain
 systemd-generator-ds-identify attach_disconnected,complain
 systemd-generator-environment-arch complain
 systemd-generator-environment-flatpak complain
+systemd-generator-friendly-recover attach_disconnected,complain
 systemd-generator-fstab attach_disconnected,complain
 systemd-generator-getty attach_disconnected,complain
 systemd-generator-gpt-auto attach_disconnected,complain
 systemd-generator-hibernate-resume attach_disconnected,complain
 systemd-generator-integritysetup attach_disconnected,complain
 systemd-generator-ostree attach_disconnected,complain
+systemd-generator-rc-local attach_disconnected,complain
 systemd-generator-run attach_disconnected,complain
+systemd-generator-snapd attach_disconnected,complain
+systemd-generator-sshd-socket attach_disconnected,complain
 systemd-generator-system-update attach_disconnected,complain
+systemd-generator-sysv attach_disconnected,complain
 systemd-generator-user-autostart attach_disconnected,complain
 systemd-generator-user-environment attach_disconnected,complain
 systemd-generator-veritysetup attach_disconnected,complain
@@ -338,8 +338,9 @@ systemd-inhibit attach_disconnected,complain
 systemd-journald attach_disconnected,mediate_deleted
 systemd-mount complain
 systemd-network-generator complain
+systemd-nsresourced complain
+systemd-nsresourcework complain
 systemd-portabled complain
-systemd-remount-fs complain
 systemd-resolve complain
 systemd-shutdown complain
 systemd-sleep-tlp complain
@@ -352,7 +353,13 @@ telegram-desktop complain
 totem attach_disconnected,complain
 tracker-writeback complain
 ucf complain
+udev-ata_id complain
+udev-bcache-export-cached complain
+udev-cdrom_id complain
 udev-dmi-memory-id complain
+udev-fido_id complain
+udev-hdparm complain
+udev-probe-bcache complain
 udisksctl complain
 udisksd attach_disconnected,complain
 ufw complain
@@ -384,6 +391,5 @@ xdm-xsession complain
 xembedsniproxy complain
 xfce-session attach_disconnected,complain
 xsettingsd complain
-xwaylandvideobridge complain
 zpool complain
 

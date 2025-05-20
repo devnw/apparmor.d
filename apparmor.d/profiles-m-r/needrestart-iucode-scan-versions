@@ -12,7 +12,7 @@ profile needrestart-iucode-scan-versions @{exec_path} {
 
   @{exec_path} mr,
 
-  @{bin}/iucode_tool  rix,
+  @{sbin}/iucode_tool     rix,
   @{sh_path}              rix,
   @{bin}/{,e}grep         rix,
   @{bin}/bsdtar           rix,
@@ -21,6 +21,7 @@ profile needrestart-iucode-scan-versions @{exec_path} {
   /usr/share/misc/ r,
   /usr/share/misc/intel-microcode* r,
 
+  /etc/default/amd64-microcode r,
   /etc/default/intel-microcode r,
   /etc/needrestart/iucode.sh r,
 
